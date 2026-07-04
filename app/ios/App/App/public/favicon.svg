@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2FBE6E"/>
+      <stop offset="0.55" stop-color="#1E9B54"/>
+      <stop offset="1" stop-color="#12784A"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.12"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.32" cy="0.25" r="0.9">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <!-- outer lens ring -->
+  <circle cx="512" cy="512" r="310" fill="none" stroke="#ffffff" stroke-opacity="0.92" stroke-width="46"/>
+  <!-- inner glass disc -->
+  <circle cx="512" cy="512" r="216" fill="url(#glass)"/>
+  <!-- aperture blades: four arcs suggesting the 4 lenses -->
+  <g stroke="#ffffff" stroke-width="34" stroke-linecap="round" fill="none">
+    <path d="M 512 358 A 154 154 0 0 1 645 434" stroke-opacity="0.95"/>
+    <path d="M 666 512 A 154 154 0 0 1 590 645" stroke-opacity="0.8"/>
+    <path d="M 512 666 A 154 154 0 0 1 379 590" stroke-opacity="0.95"/>
+    <path d="M 358 512 A 154 154 0 0 1 434 379" stroke-opacity="0.8"/>
+  </g>
+  <!-- center spark -->
+  <circle cx="512" cy="512" r="56" fill="#ffffff"/>
+  <!-- specular highlight -->
+  <ellipse cx="400" cy="340" rx="170" ry="90" fill="#ffffff" opacity="0.18" transform="rotate(-28 400 340)"/>
+</svg>

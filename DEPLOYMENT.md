@@ -1,16 +1,19 @@
 # Deploying Prismiq
 
-The app lives in `app/`. It is one codebase with three targets:
+Prismiq has two frontends:
 
-| Target | How |
-|---|---|
-| Web (Vercel) | Vite static build (`app/dist`) |
-| iOS App Store | Capacitor project in `app/ios` |
-| Google Play | Capacitor project in `app/android` |
+| Target | Codebase | How it ships |
+|---|---|---|
+| Web (Vercel) | `app/` — React + Vite | Static build (`app/dist`) |
+| iOS App Store + Google Play | `mobile/` — Expo React Native | EAS cloud builds (no Mac required) |
+
+> The `mobile/` Expo app is delivered separately (zip) and can be added to this
+> repo later. The Capacitor projects that briefly lived in `app/ios` and
+> `app/android` were removed in favor of React Native.
 
 ---
 
-## 1. Host on Vercel (~5 minutes)
+## 1. Host the web app on Vercel (~5 minutes)
 
 1. Go to [vercel.com](https://vercel.com) and sign in **with your GitHub account**.
 2. Click **Add New → Project** and import `raphaeljosephsantiagolascano/Prismiq-lens`.
@@ -22,89 +25,44 @@ Every future `git push` to `main` redeploys automatically.
 
 ---
 
-## 2. iOS App Store (needs your Mac + Apple Developer account)
+## 2. App stores via the Expo app (`mobile/`)
 
-One-time setup on your Mac:
+The React Native app is built and submitted with **EAS (Expo Application
+Services)** — cloud builds, so you don't need a Mac even for iOS.
+
+One-time setup:
 
 ```bash
-git clone https://github.com/raphaeljosephsantiagolascano/Prismiq-lens.git
-cd Prismiq-lens/app
+cd mobile
 npm install
-npm run build
-npx cap sync ios
-npx cap open ios        # opens the project in Xcode
+npm install -g eas-cli
+npx expo start          # test locally with the Expo Go app on your phone
+eas login               # free Expo account
+eas build:configure
 ```
 
-In Xcode:
-
-1. Click the **App** project in the sidebar → **Signing & Capabilities** tab.
-2. Set **Team** to your Apple Developer team. Xcode manages certificates
-   automatically. The bundle ID is already `com.prismiq.app`.
-3. Pick **Any iOS Device (arm64)** as the run destination.
-4. Menu **Product → Archive**. When the Organizer window opens, click
-   **Distribute App → App Store Connect → Upload**.
-
-In [App Store Connect](https://appstoreconnect.apple.com):
-
-1. **My Apps → + → New App**: platform iOS, name **Prismiq**, bundle ID
-   `com.prismiq.app`, any SKU (e.g. `prismiq-001`).
-2. Fill in the listing: description, keywords, support URL (your Vercel URL
-   works), screenshots (run the app in Simulator: iPhone 15 Pro Max for 6.7",
-   then **File → Save Screen** — Apple requires 6.7" and 5.5" sets).
-3. Under **App Privacy**, declare "Data Not Collected" (true for now — the app
-   is fully local with mock data).
-4. Select the build you uploaded, then **Submit for Review**.
-
-Review notes worth adding: mention that scanning/AI analysis currently shows
-demo data (the Gemini backend is not connected yet). Apple sometimes rejects
-apps whose core feature looks non-functional — if that happens, the fix is to
-wire up the real backend first.
-
-### Updating the app later
+### iOS App Store
 
 ```bash
-git pull
-npm run build && npx cap sync ios && npx cap open ios
+eas build --platform ios          # cloud-builds a signed .ipa (guides you through Apple login)
+eas submit --platform ios         # uploads straight to App Store Connect
 ```
 
-Bump **Version** (and **Build**) in Xcode's General tab, archive, upload again.
+Then in [App Store Connect](https://appstoreconnect.apple.com): create the app
+listing (name **Prismiq**, bundle ID `com.prismiq.app`), add description,
+screenshots, privacy info ("Data Not Collected" — the app is fully local),
+select the uploaded build, and Submit for Review.
 
----
-
-## 3. Google Play (no Mac needed)
-
-One-time: create a [Play Console](https://play.google.com/console) developer
-account ($25 once).
-
-Build the signed bundle (any OS with Android Studio):
+### Google Play
 
 ```bash
-cd Prismiq-lens/app
-npm install && npm run build && npx cap sync android
-npx cap open android     # opens Android Studio
+eas build --platform android      # cloud-builds a signed .aab
+eas submit --platform android     # or upload the .aab manually in Play Console
 ```
 
-In Android Studio: **Build → Generate Signed App Bundle** → create a keystore
-(keep it safe forever — losing it means you can never update the app) → build
-the `.aab`.
-
-In Play Console: **Create app** → name **Prismiq**, package `com.prismiq.app`
-→ upload the `.aab` under **Production → Create new release** → fill in the
-store listing + content rating questionnaire → submit.
-
----
-
-## Icons & splash screens
-
-Already generated and committed (all iOS sizes, all Android densities, PWA
-icons). To regenerate after changing the logo, edit `app/assets/icon.svg`
-and `app/assets/splash*.svg`, then:
-
-```bash
-cd app
-node -e "const s=require('sharp');(async()=>{await s('assets/icon.svg').resize(1024,1024).png().toFile('assets/icon.png');await s('assets/splash.svg').resize(2732,2732).png().toFile('assets/splash.png');await s('assets/splash-dark.svg').resize(2732,2732).png().toFile('assets/splash-dark.png');})()"
-npx capacitor-assets generate --iconBackgroundColor '#1E9B54' --iconBackgroundColorDark '#12341f' --splashBackgroundColor '#ffffff' --splashBackgroundColorDark '#0d0f14'
-```
+In [Play Console](https://play.google.com/console): create the app (package
+`com.prismiq.app`), upload the `.aab` in a Production release, complete the
+store listing + content rating, and submit.
 
 ---
 
