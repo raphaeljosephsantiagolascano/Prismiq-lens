@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter Tight', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #f4f5f8;
+}
+
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(24px, -30px) scale(1.12); }
+  66% { transform: translate(-20px, 20px) scale(.94); }
+}
+@keyframes reveal {
+  0% { opacity: 0; transform: translateY(14px) scale(.98); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: .55; }
+  50% { opacity: .9; }
+}
+@keyframes floatIn {
+  0% { opacity: 0; transform: translateY(16px) scale(.8); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes sweep {
+  0% { background-position: 180% 0; }
+  100% { background-position: -80% 0; }
+}
+@keyframes typedot {
+  0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.sp-scroll {
+  scrollbar-width: none;
+}
+.sp-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.press {
+  transition: transform .12s ease;
+}
+.press:active {
+  transform: scale(.94);
+}
