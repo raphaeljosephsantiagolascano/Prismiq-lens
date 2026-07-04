@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0e0f13;font-family:'Inter Tight',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  @keyframes blob{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(24px,-30px) scale(1.12)}66%{transform:translate(-20px,20px) scale(.94)}}
+  @keyframes reveal{0%{opacity:0;transform:translateY(14px) scale(.98)}100%{opacity:1;transform:none}}
+  @keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulseGlow{0%,100%{opacity:.55}50%{opacity:.9}}
+  @keyframes floatIn{0%{opacity:0;transform:translateY(16px) scale(.8)}60%{opacity:1}100%{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @keyframes sweep{0%{background-position:180% 0}100%{background-position:-80% 0}}
+  @keyframes typedot{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .sp-scroll{scrollbar-width:none}
+  .sp-scroll::-webkit-scrollbar{display:none}
+  .press{transition:transform .12s ease}
+  .press:active{transform:scale(.94)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;background:radial-gradient(120% 120% at 50% 0%,#1b1d24,#0b0c10 70%)">
+
+  <div style="position:relative;width:392px;height:844px;border-radius:56px;padding:11px;background:linear-gradient(160deg,#3a3d47,#15161b);box-shadow:0 40px 90px -20px rgba(0,0,0,.7),0 0 0 2px rgba(255,255,255,.04)">
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:30px;background:#0b0c10;border-radius:0 0 18px 18px;z-index:60"></div>
+
+    <div class="app" style="position:relative;width:100%;height:100%;border-radius:46px;overflow:hidden;--accent:{{accent}};--glow:{{glow}};--btn:{{buttonGradient}};--tint:{{tint}};--soft:{{soft}};--ink:{{ink}};--surface:{{surface}};--panel:{{panel}};--glass1:{{glass1}};--glass2:{{glass2}}">
+
+      <div style="position:absolute;inset:0;z-index:0;pointer-events:none">
+        <div style="position:absolute;inset:0;transition:background .7s ease;background:{{bgStyle}}"></div>
+        <div style="position:absolute;top:-60px;left:-40px;width:240px;height:240px;border-radius:50%;filter:blur(46px);opacity:.55;animation:blob 14s ease-in-out infinite;background:var(--glow)"></div>
+        <div style="position:absolute;bottom:120px;right:-60px;width:260px;height:260px;border-radius:50%;filter:blur(52px);opacity:.4;animation:blob 18s ease-in-out infinite reverse;background:var(--glow)"></div>
+        <div style="position:absolute;top:8%;left:36%;width:160px;height:160px;border-radius:50%;filter:blur(50px);opacity:.26;animation:blob 22s ease-in-out infinite;background:#ffffff"></div>
+      </div>
+
+      <!-- status bar -->
+      <div style="position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 8px;z-index:40;pointer-events:none">
+        <span style="font-size:14px;font-weight:700;color:rgb(var(--ink))">9:41</span>
+        <span style="display:flex;gap:6px;align-items:center;color:rgb(var(--ink))">
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="4.5" width="3" height="7.5" rx="1"/><rect x="9" y="2" width="3" height="10" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+          <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-opacity=".5"/><rect x="2.5" y="2.5" width="15" height="7" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="1.6" height="4" rx="1" fill="currentColor"/></svg>
+        </span>
+      </div>
+
+      <!-- ============ WELCOME ============ -->
+      <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 40px;animation:fadeup .5s ease">
+          <div style="width:104px;height:104px;border-radius:30px;display:flex;align-items:center;justify-content:center;background:var(--tint);backdrop-filter:blur(20px) saturate(1.7);-webkit-backdrop-filter:blur(20px) saturate(1.7);border:1px solid rgba(255,255,255,.55);box-shadow:0 20px 50px -14px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.7);margin-bottom:26px">
+            <div style="width:56px;height:56px;color:var(--accent)">{{ heroIcon }}</div>
+          </div>
+          <div style="font-size:14px;font-weight:600;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">Prismiq · AI Scanner Suite</div>
+          <h1 style="margin:0;font-size:38px;line-height:1.08;font-weight:800;color:rgb(var(--ink));letter-spacing:-1px">One camera.<br>Multiple lenses.</h1>
+          <p style="margin:16px 0 0;font-size:16px;line-height:1.5;color:rgba(var(--ink),.62);max-width:280px">Four intelligent lenses — meals, produce, plants and stones — in one premium scanner.</p>
+          <div style="display:flex;gap:9px;margin:30px 0 34px">
+            <sc-for list="{{ wheelModes }}" as="m" hint-placeholder-count="4">
+              <div style="width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--panel);border:1px solid rgba(255,255,255,.6);color:{{ m.accent }}"><div style="width:22px;height:22px">{{ m.icon }}</div></div>
+            </sc-for>
+          </div>
+          <button class="press" onClick="{{ dismissWelcome }}" style="width:100%;max-width:300px;border:none;cursor:pointer;padding:18px;border-radius:20px;font-family:inherit;font-size:17px;font-weight:700;color:#fff;background:var(--btn);box-shadow:0 16px 34px -12px var(--glow)">Get Started</button>
+          <p style="margin:18px 0 0;font-size:12px;color:rgba(var(--ink),.4)">AI-generated estimates · verify important results</p>
+        </div>
+      </sc-if>
+
+      <!-- ============ APP CONTENT ============ -->
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
+        <div class="sp-scroll" key="{{ scrollKey }}" style="position:absolute;inset:0;z-index:1;overflow-y:auto;padding:60px 20px 122px;animation:fadein .35s ease">
+
+          <!-- ===== SHARED HOME HEADER + WHEEL (home tab of every lens) ===== -->
+          <sc-if value="{{ isHomeTab }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div>
+                <div style="font-size:24px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px" data-comment-anchor="9b185c48ae-div">Prismiq</div>
+                <div style="font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(var(--ink),.4);margin-top:2px">AI Scanner Suite</div>
+              </div>
+              <button onClick="{{ openSettings }}" class="press" style="position:relative;width:44px;height:44px;border-radius:15px;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:inherit;font-size:15px;color:var(--accent);cursor:pointer">A<span style="position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:var(--btn);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px -4px var(--glow)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 3.6 8a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H8a1.65 1.65 0 0 0 1-1.51V2a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V8a1.65 1.65 0 0 0 1.51 1H22a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></button>
+            </div>
+            {{ wheel }}
+            <div style="display:flex;justify-content:center;gap:8px;margin:2px 0 18px">
+              <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+                <button onClick="{{ d.onClick }}" style="border:none;cursor:pointer;padding:0;height:7px;border-radius:99px;transition:all .4s ease;background:{{ d.bg }};width:{{ d.w }}"></button>
+              </sc-for>
+            </div>
+            <div style="text-align:center;margin-bottom:20px">
+              <div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent)">{{ modeName }}</div>
+              <h2 style="margin:5px 0 6px;font-size:25px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.6px">{{ tagline }}</h2>
+              <p style="margin:0 auto;max-width:290px;font-size:14px;line-height:1.5;color:rgba(var(--ink),.58)">{{ description }}</p>
+            </div>
+          </sc-if>
+
+          <!-- ===== PLATE · TODAY (nutrition ring) ===== -->
+          <sc-if value="{{ isPlateToday }}" hint-placeholder-val="{{ false }}">
+            <div style="position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(135deg,var(--glass1) 0%,var(--glass2) 100%);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border:1px solid rgba(255,255,255,.6);padding:22px 20px 20px;box-shadow:0 22px 46px -18px var(--glow),inset 0 1px 1px rgba(255,255,255,.8);margin-bottom:16px">
+              <div style="position:relative;display:flex;justify-content:center;margin-bottom:6px">
+                {{ calorieRing }}
+                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center" data-comment-anchor="9e679da283-div">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(var(--ink),.5)">CALORIES</div>
+                  <div style="font-size:52px;font-weight:800;color:rgb(var(--ink));line-height:1;margin:2px 0">{{ calConsumed }}</div>
+                  <div style="font-size:13px;color:rgba(var(--ink),.55)">of {{ calGoal }} kcal</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
+                <sc-for list="{{ macroLegend }}" as="ml" hint-placeholder-count="3">
+                  <div style="text-align:center">
+                    <div style="display:flex;align-items:center;justify-content:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:{{ ml.color }}"></span><span style="font-size:12px;color:rgba(var(--ink),.55)">{{ ml.label }}</span></div>
+                    <div style="font-size:18px;font-weight:800;color:rgb(var(--ink));margin-top:3px">{{ ml.value }}<span style="font-size:12px;font-weight:600;color:rgba(var(--ink),.45)">g</span></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:13px;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.55);border-radius:18px;padding:12px 15px;margin-bottom:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)">
+              <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M3 12h18"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px"><span style="font-size:13.5px;font-weight:700;color:rgb(var(--ink))">{{ usageText }}</span><span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.42)">{{ usageResets }}</span></div>
+                <div style="height:6px;border-radius:99px;background:rgba(var(--ink),.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--btn);width:{{ usageBarPct }};transition:width .5s ease"></div></div>
+              </div>
+            </div>
+            <button class="press" onClick="{{ goScan }}" style="width:100%;border:none;cursor:pointer;padding:18px;border-radius:20px;font-family:inherit;font-size:16px;font-weight:700;color:#fff;background:var(--btn);box-shadow:0 16px 34px -12px var(--glow);margin-bottom:22px;display:flex;align-items:center;justify-content:center;gap:9px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></svg>
+              Scan a meal
+            </button>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(var(--ink),.42);margin:0 2px 10px">Recent</div>
+            <sc-for list="{{ plateRecent }}" as="r" hint-placeholder-count="1">
+              <div onClick="{{ goHistory }}" style="cursor:pointer;display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:12px 14px;margin-bottom:10px;box-shadow:0 8px 22px -16px rgba(0,0,0,.3)">
+                <div style="width:46px;height:46px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--accent)"><div style="width:24px;height:24px">{{ heroIcon }}</div></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink));white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</div>
+                  <div style="font-size:12px;color:rgba(var(--ink),.5)">{{ r.time }}</div>
+                </div>
+                <div style="font-size:15px;font-weight:800;color:rgb(var(--ink))">{{ r.cal }}<span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.45)"> kcal</span></div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== PLATE · CALENDAR ===== -->
+          <sc-if value="{{ isPlateCalendar }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 14px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">Calendar</h2>
+            <div style="background:var(--tint);backdrop-filter:blur(18px) saturate(1.7);-webkit-backdrop-filter:blur(18px) saturate(1.7);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:16px;box-shadow:0 10px 30px -16px rgba(0,0,0,.15);margin-bottom:16px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                <button class="press" onClick="{{ calPrev }}" style="width:34px;height:34px;border:none;cursor:pointer;border-radius:11px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:rgb(var(--ink))"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                <span style="font-size:15px;font-weight:700;color:rgb(var(--ink))">{{ calMonthLabel }}</span>
+                <button class="press" onClick="{{ calNext }}" style="width:34px;height:34px;border:none;cursor:pointer;border-radius:11px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:rgb(var(--ink))"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px">
+                <sc-for list="{{ calWeekdays }}" as="w" hint-placeholder-count="7">
+                  <div style="text-align:center;font-size:11px;font-weight:600;color:rgba(var(--ink),.4)">{{ w.d }}</div>
+                </sc-for>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+                <sc-for list="{{ calDays }}" as="c" hint-placeholder-count="35">
+                  <button onClick="{{ c.onClick }}" style="aspect-ratio:1;border:none;cursor:pointer;background:none;padding:0;font-family:inherit;position:relative;display:flex;align-items:center;justify-content:center">
+                    <svg viewBox="0 0 36 36" style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)"><circle cx="18" cy="18" r="15" fill="none" stroke="{{ c.track }}" stroke-width="2.6"></circle><circle cx="18" cy="18" r="15" fill="none" stroke="{{ c.ring }}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="{{ c.dash }}" stroke-dashoffset="{{ c.offset }}" style="transition:stroke-dashoffset .5s ease"></circle></svg>
+                    <span style="position:relative;z-index:1;width:64%;height:64%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:{{ c.centerBg }};color:{{ c.color }};transition:background .3s ease">{{ c.day }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(var(--ink),.42);margin:0 2px 10px">{{ calSelLabel }}</div>
+            <sc-if value="{{ calSelNotEmpty }}" hint-placeholder-val="{{ true }}">
+              <div style="background:linear-gradient(135deg,var(--glass1) 0%,var(--glass2) 100%);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 20px 46px -18px var(--glow),inset 0 1px 1px rgba(255,255,255,.8)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px" data-comment-anchor="9b3245e325-div">
+                  <div><span style="font-size:30px;font-weight:800;color:rgb(var(--ink))">{{ calSelCal }}</span><span style="font-size:14px;font-weight:600;color:rgba(var(--ink),.45)"> / {{ calGoal }} kcal</span></div>
+                  <span style="font-size:13px;font-weight:600;color:rgba(var(--ink),.5)">{{ calSelMeals }}</span>
+                </div>
+                <div style="height:8px;border-radius:99px;background:rgba(var(--ink),.08);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--btn);width:{{ calSelPct }}"></div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px">
+                  <sc-for list="{{ calSelMacros }}" as="mm" hint-placeholder-count="3">
+                    <div>
+                      <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="width:7px;height:7px;border-radius:50%;background:{{ mm.color }}"></span><span style="font-size:11.5px;font-weight:600;color:rgba(var(--ink),.55)">{{ mm.label }}</span></div>
+                      <div style="font-size:16px;font-weight:800;color:rgb(var(--ink))">{{ mm.value }}<span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.4)">g</span></div>
+                      <div style="height:5px;border-radius:99px;background:rgba(var(--ink),.08);overflow:hidden;margin-top:5px"><div style="height:100%;border-radius:99px;background:{{ mm.color }};width:{{ mm.barPct }};transition:width .4s ease"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(var(--ink),.42);margin:2px 2px 10px">Meals</div>
+              <sc-for list="{{ calSelList }}" as="r" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:13px;background:var(--soft);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:12px 14px;margin-bottom:10px">
+                  <div style="width:44px;height:44px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel);color:var(--accent)"><div style="width:23px;height:23px">{{ heroIcon }}</div></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:rgb(var(--ink));white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ r.time }} · {{ r.macros }}</div></div>
+                  <div style="font-size:14px;font-weight:800;color:rgb(var(--ink))">{{ r.cal }}<span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.45)"> kcal</span></div>
+                </div>
+              </sc-for>
+            </sc-if>
+            <sc-if value="{{ calSelEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:24px;color:rgba(var(--ink),.4);font-size:13.5px">No meals logged this day.</div>
+            </sc-if>
+          </sc-if>
+
+          <!-- ===== PLATE · HISTORY ===== -->
+          <sc-if value="{{ isPlateHistory }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 14px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">History</h2>
+            <div style="display:flex;align-items:center;gap:9px;background:var(--tint);backdrop-filter:blur(14px) saturate(1.7);-webkit-backdrop-filter:blur(14px) saturate(1.7);border:1px solid rgba(255,255,255,.5);border-radius:15px;padding:11px 14px;margin-bottom:14px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink),.4)" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
+              <input value="{{ query }}" onInput="{{ onSearch }}" placeholder="Search meals" style="flex:1;border:none;background:none;outline:none;font-family:inherit;font-size:14px;color:rgb(var(--ink))"/>
+            </div>
+            <sc-for list="{{ plateHistoryList }}" as="h" hint-placeholder-count="3">
+              <div onClick="{{ goResult }}" class="press" style="cursor:pointer;display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:12px 14px;margin-bottom:10px;box-shadow:0 8px 20px -16px rgba(0,0,0,.25)">
+                <div style="width:46px;height:46px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--accent)"><div style="width:24px;height:24px">{{ heroIcon }}</div></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink));white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.name }}</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ h.meta }}</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="text-align:right"><div style="font-size:14px;font-weight:800;color:rgb(var(--ink))">{{ h.cal }}</div><div style="font-size:11px;color:rgba(var(--ink),.4)">{{ h.time }}</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink),.3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== PLATE · GOAL ===== -->
+          <sc-if value="{{ isPlateGoal }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 3px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">Your goal</h2>
+            <p style="margin:0 0 22px;font-size:13.5px;line-height:1.5;color:rgba(var(--ink),.55)">We use this to estimate your daily calories. Values are estimates only.</p>
+
+            <div style="font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin:0 2px 8px">You are</div>
+            <div style="display:flex;gap:8px;margin-bottom:18px">
+              <button class="press" onClick="{{ setSexMale }}" style="flex:1;border:none;cursor:pointer;padding:13px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;color:{{ maleColor }};background:{{ maleBg }};transition:all .3s ease">Male</button>
+              <button class="press" onClick="{{ setSexFemale }}" style="flex:1;border:none;cursor:pointer;padding:13px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;color:{{ femaleColor }};background:{{ femaleBg }};transition:all .3s ease">Female</button>
+            </div>
+
+            <div style="font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin:0 2px 8px">Age</div>
+            <input value="{{ goalAge }}" onInput="{{ onAge }}" type="number" style="width:100%;border:1px solid rgba(255,255,255,.6);background:var(--tint);backdrop-filter:blur(14px) saturate(1.7);-webkit-backdrop-filter:blur(14px) saturate(1.7);border-radius:14px;padding:14px 16px;font-family:inherit;font-size:15px;font-weight:600;color:rgb(var(--ink));outline:none;margin-bottom:18px"/>
+
+            <div style="font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin:0 2px 8px">Height &amp; weight</div>
+            <div style="display:flex;gap:10px;margin-bottom:18px">
+              <div style="flex:1;position:relative"><input value="{{ goalHeight }}" onInput="{{ onHeight }}" type="number" style="width:100%;border:1px solid rgba(255,255,255,.6);background:var(--tint);border-radius:14px;padding:14px 44px 14px 16px;font-family:inherit;font-size:15px;font-weight:600;color:rgb(var(--ink));outline:none"/><span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:rgba(var(--ink),.4)">cm</span></div>
+              <div style="flex:1;position:relative"><input value="{{ goalWeight }}" onInput="{{ onWeight }}" type="number" style="width:100%;border:1px solid rgba(255,255,255,.6);background:var(--tint);border-radius:14px;padding:14px 44px 14px 16px;font-family:inherit;font-size:15px;font-weight:600;color:rgb(var(--ink));outline:none"/><span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:rgba(var(--ink),.4)">kg</span></div>
+            </div>
+
+            <div style="font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin:0 2px 8px">Activity level</div>
+            <select value="{{ goalActivity }}" onChange="{{ onActivity }}" style="width:100%;border:1px solid rgba(255,255,255,.6);background:var(--tint);border-radius:14px;padding:14px 16px;font-family:inherit;font-size:15px;font-weight:600;color:rgb(var(--ink));outline:none;margin-bottom:18px;appearance:none;-webkit-appearance:none">
+              <option value="1.2">Sedentary — little exercise</option>
+              <option value="1.375">Light — 1–3 days/week</option>
+              <option value="1.55">Moderate — 3–5 days/week</option>
+              <option value="1.725">Active — 6–7 days/week</option>
+            </select>
+
+            <div style="font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin:0 2px 8px">Goal</div>
+            <div style="display:flex;gap:8px;margin-bottom:22px">
+              <sc-for list="{{ targetOptions }}" as="t" hint-placeholder-count="3">
+                <button onClick="{{ t.onClick }}" style="flex:1;border:none;cursor:pointer;padding:13px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;transition:all .3s ease;color:{{ t.color }};background:{{ t.bg }}">{{ t.label }}</button>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;border-radius:20px;background:linear-gradient(165deg,#20242c,#14161b);padding:20px 22px;margin-bottom:16px;box-shadow:0 16px 34px -18px rgba(0,0,0,.4)">
+              <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,.7)">Estimated daily goal</span>
+              <span style="font-size:30px;font-weight:800;color:#fff">{{ goalEstimate }}<span style="font-size:14px;font-weight:600;color:rgba(255,255,255,.5)"> kcal</span></span>
+            </div>
+            <button class="press" onClick="{{ saveGoal }}" style="width:100%;border:none;cursor:pointer;padding:18px;border-radius:20px;font-family:inherit;font-size:16px;font-weight:700;color:#fff;background:var(--btn);box-shadow:0 16px 34px -12px var(--glow)">Save goal</button>
+          </sc-if>
+
+          <!-- ===== SHARED · SCAN ===== -->
+          <sc-if value="{{ isScan }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;margin-bottom:18px">
+              <div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent)">{{ modeName }}</div>
+              <h2 style="margin:5px 0 4px;font-size:24px;font-weight:800;color:rgb(var(--ink))">{{ ctaText }}</h2>
+              <p style="margin:0 auto;max-width:280px;font-size:13.5px;line-height:1.5;color:rgba(var(--ink),.55)">{{ scanInstruction }}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:13px;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.55);border-radius:18px;padding:12px 15px;margin-bottom:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)">
+              <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M3 12h18"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px"><span style="font-size:13.5px;font-weight:700;color:rgb(var(--ink))">{{ usageText }}</span><span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.42)">{{ usageResets }}</span></div>
+                <div style="height:6px;border-radius:99px;background:rgba(var(--ink),.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--btn);width:{{ usageBarPct }};transition:width .5s ease"></div></div>
+              </div>
+            </div>
+            <div style="position:relative;aspect-ratio:3/3.4;border-radius:28px;overflow:hidden;background:var(--tint);backdrop-filter:blur(18px) saturate(1.7);-webkit-backdrop-filter:blur(18px) saturate(1.7);border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+              <sc-if value="{{ scanning }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;z-index:2;overflow:hidden;border-radius:28px">
+                  <div style="position:absolute;inset:0;background:linear-gradient(115deg,transparent 34%,rgba(255,255,255,.4) 50%,transparent 66%);background-size:220% 100%;animation:sweep 1.7s linear infinite"></div>
+                  <sc-for list="{{ scanBadges }}" as="sb" hint-placeholder-count="3">
+                    <div style="position:absolute;{{ sb.pos }};z-index:3;opacity:0;animation:floatIn .9s cubic-bezier(.22,1,.36,1) forwards;animation-delay:{{ sb.delay }}">
+                      <div style="animation:bob 3.2s ease-in-out infinite;animation-delay:{{ sb.delay }};width:{{ sb.size }};height:{{ sb.size }};border-radius:50%;background:radial-gradient(120% 120% at 30% 22%,rgba(255,255,255,.5) 0%,rgba(255,255,255,.18) 55%,{{ sb.tint }} 100%);backdrop-filter:blur(20px) saturate(1.9);-webkit-backdrop-filter:blur(20px) saturate(1.9);border:1px solid rgba(255,255,255,.55);box-shadow:0 14px 32px -10px var(--glow),inset 0 1px 1px rgba(255,255,255,.9),inset 0 0 0 1px {{ sb.tint }},inset 0 -6px 14px -6px {{ sb.color }};display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px">
+                        <div style="font-size:{{ sb.fs }};font-weight:800;color:{{ sb.color }};line-height:1.05">{{ sb.value }}</div>
+                        <div style="font-size:9.5px;font-weight:700;letter-spacing:.3px;color:{{ sb.color }};margin-top:2px;text-transform:uppercase">{{ sb.label }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <div style="position:absolute;bottom:16px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:8px;z-index:4">
+                    <div style="width:16px;height:16px;border-radius:50%;border:2px solid rgba(var(--ink),.15);border-top-color:var(--accent);animation:spin .9s linear infinite"></div>
+                    <span style="font-size:13px;font-weight:700;color:rgb(var(--ink))">Analyzing…</span>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ notScanning }}" hint-placeholder-val="{{ true }}">
+                <div style="text-align:center;padding:0 30px">
+                  <div style="width:70px;height:70px;margin:0 auto 16px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:var(--panel);color:var(--accent)"><div style="width:36px;height:36px">{{ heroIcon }}</div></div>
+                  <div style="font-size:15px;font-weight:700;color:rgb(var(--ink))">Point at your {{ subjectWord }}</div>
+                  <div style="font-size:12.5px;color:rgba(var(--ink),.5);margin-top:4px;line-height:1.5">Fill the frame · good lighting · steady hands</div>
+                </div>
+              </sc-if>
+              <div style="position:absolute;top:16px;left:16px;width:26px;height:26px;border-left:2.5px solid var(--accent);border-top:2.5px solid var(--accent);border-radius:6px 0 0 0"></div>
+              <div style="position:absolute;top:16px;right:16px;width:26px;height:26px;border-right:2.5px solid var(--accent);border-top:2.5px solid var(--accent);border-radius:0 6px 0 0"></div>
+              <div style="position:absolute;bottom:16px;left:16px;width:26px;height:26px;border-left:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);border-radius:0 0 0 6px"></div>
+              <div style="position:absolute;bottom:16px;right:16px;width:26px;height:26px;border-right:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);border-radius:0 0 6px 0"></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:12px">
+              <button class="press" onClick="{{ startScan }}" style="flex:1;border:none;cursor:pointer;padding:15px;border-radius:16px;font-family:inherit;font-size:14px;font-weight:700;color:rgb(var(--ink));background:var(--tint);border:1px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;gap:7px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>Upload</button>
+              <button class="press" onClick="{{ startScan }}" style="flex:1;border:none;cursor:pointer;padding:15px;border-radius:16px;font-family:inherit;font-size:14px;font-weight:700;color:rgb(var(--ink));background:var(--tint);border:1px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;gap:7px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></svg>Camera</button>
+            </div>
+            <sc-if value="{{ usageNotEmpty }}" hint-placeholder-val="{{ true }}">
+              <button class="press" onClick="{{ startScan }}" style="width:100%;border:none;cursor:pointer;padding:18px;border-radius:18px;font-family:inherit;font-size:16px;font-weight:700;color:#fff;background:var(--btn);box-shadow:0 16px 34px -12px var(--glow);margin-bottom:16px">Analyze</button>
+            </sc-if>
+            <sc-if value="{{ usageEmpty }}" hint-placeholder-val="{{ false }}">
+              <button disabled style="width:100%;border:none;padding:18px;border-radius:18px;font-family:inherit;font-size:14.5px;font-weight:700;color:rgba(var(--ink),.4);background:rgba(var(--ink),.06);margin-bottom:16px;cursor:not-allowed">Daily limit reached · resets tomorrow</button>
+            </sc-if>
+            <div style="display:flex;gap:10px;align-items:flex-start;background:var(--soft);border:1px solid rgba(255,255,255,.45);border-radius:16px;padding:13px 15px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg>
+              <span style="font-size:12px;line-height:1.5;color:rgba(var(--ink),.6)">{{ disclaimer }}</span>
+            </div>
+          </sc-if>
+
+          <!-- ===== SHARED · RESULT ===== -->
+          <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+            <div style="animation:reveal .5s ease">
+              <sc-if value="{{ notFromHistory }}" hint-placeholder-val="{{ true }}"><div onClick="{{ goScan }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin-bottom:14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> Scan again</div></sc-if>
+              <sc-if value="{{ fromHistory }}" hint-placeholder-val="{{ false }}"><div onClick="{{ goHistory }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:rgba(var(--ink),.55);margin-bottom:14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> Back to history</div></sc-if>
+              <div style="position:relative;aspect-ratio:16/10;border-radius:22px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.55);background:repeating-linear-gradient(135deg,rgba(var(--ink),.055) 0 11px,rgba(var(--ink),.02) 11px 22px)">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.5px;color:rgba(var(--ink),.4)">{{ resultImgLabel }}</div>
+                <div style="position:absolute;top:12px;left:12px;padding:5px 10px;border-radius:99px;background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:11px;font-weight:700;color:var(--accent)">Captured</div>
+              </div>
+              <div style="text-align:left;margin-bottom:18px;padding:18px;border-radius:24px;background:linear-gradient(135deg,var(--glass1) 0%,var(--glass2) 100%);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border:1px solid rgba(255,255,255,.6);box-shadow:0 20px 46px -18px var(--glow),inset 0 1px 1px rgba(255,255,255,.8)">
+                <h2 style="margin:0;font-size:24px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">{{ resultTitle }}</h2>
+                <div style="font-size:14px;color:rgba(var(--ink),.55);margin-top:3px">{{ resultSubtitle }}</div>
+                <sc-if value="{{ hasAka }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:600;color:var(--accent);margin-top:4px">{{ resultAka }}</div></sc-if>
+                <sc-if value="{{ hasDescription }}" hint-placeholder-val="{{ false }}"><p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:rgba(var(--ink),.6)">{{ resultDescription }}</p></sc-if>
+                <div style="margin-top:14px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:700;color:rgb(var(--ink))">{{ confLabel }}</span><span style="font-size:12px;font-weight:800;color:{{ confColor }}">{{ confPct }}</span></div>
+                  <div style="height:8px;border-radius:99px;background:rgba(var(--ink),.09);overflow:hidden"><div style="height:100%;border-radius:99px;width:{{ confPct }};background:{{ confColor }};box-shadow:0 0 10px -1px {{ confColor }}"></div></div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+                <sc-for list="{{ resultFields }}" as="rf" hint-placeholder-count="4">
+                  <div style="position:relative;overflow:hidden;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:15px 16px 15px 18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)"><div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:{{ rf.color }}"></div><div style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;flex:none;background:{{ rf.color }}"></span><div style="font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:rgba(var(--ink),.45)">{{ rf.label }}</div></div><div style="font-size:19px;font-weight:800;color:{{ rf.color }};margin-top:4px">{{ rf.value }}</div></div>
+                </sc-for>
+              </div>
+              <sc-for list="{{ resultLists }}" as="rl" hint-placeholder-count="1">
+                <div style="background:var(--soft);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:15px 16px;margin-bottom:14px">
+                  <div style="font-size:14px;font-weight:700;color:rgb(var(--ink));margin-bottom:10px">{{ rl.title }}</div>
+                  <sc-for list="{{ rl.items }}" as="b" hint-placeholder-count="3">
+                    <div style="display:flex;gap:9px;align-items:flex-start;margin-bottom:8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:13px;line-height:1.45;color:rgba(var(--ink),.7)">{{ b.t }}</span></div>
+                  </sc-for>
+                </div>
+              </sc-for>
+              <div style="display:flex;gap:10px;align-items:flex-start;background:#fdecec;border:1px solid rgba(220,60,60,.18);border-radius:16px;padding:13px 15px;margin-bottom:16px">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d23b3b" stroke-width="2" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="font-size:12px;line-height:1.5;color:#b23636">{{ resultCaution }}</span>
+              </div>
+              <sc-if value="{{ hasPortionQs }}" hint-placeholder-val="{{ false }}">
+                <div style="background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:16px;margin-bottom:16px;box-shadow:0 8px 22px -16px rgba(0,0,0,.25)">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                    <div style="width:32px;height:32px;flex:none;border-radius:50%;background:var(--btn);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px -6px var(--glow)"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6L19.5 9l-4.4 3.4L16.4 18 12 14.8 7.6 18l1.3-5.6L4.5 9l5.6-1.4L12 2Z"/></svg></div>
+                    <div><div style="font-size:13.5px;font-weight:700;color:rgb(var(--ink))">Refine with Prismiq AI</div><div style="font-size:11px;color:rgba(var(--ink),.5)">A quick chat sharpens your estimate</div></div>
+                  </div>
+                  <div style="background:var(--soft);border:1px solid rgba(255,255,255,.5);border-radius:16px;padding:13px 13px 15px">
+                    <sc-for list="{{ chatMsgs }}" as="cm" hint-placeholder-count="2">
+                      <div style="display:flex;justify-content:{{ cm.side }};margin-bottom:8px">
+                        <div style="max-width:80%;padding:9px 13px;border-radius:{{ cm.brad }};font-size:13px;line-height:1.42;background:{{ cm.bg }};color:{{ cm.color }};box-shadow:0 4px 14px -9px rgba(0,0,0,.3)">{{ cm.text }}</div>
+                      </div>
+                    </sc-for>
+                    <sc-if value="{{ chatTyping }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;justify-content:flex-start">
+                        <div style="display:flex;gap:4px;align-items:center;padding:12px 14px;border-radius:15px 15px 15px 4px;background:var(--surface);box-shadow:0 4px 14px -9px rgba(0,0,0,.3)">
+                          <span style="width:6px;height:6px;border-radius:50%;background:rgba(var(--ink),.4);animation:typedot 1.1s ease infinite"></span>
+                          <span style="width:6px;height:6px;border-radius:50%;background:rgba(var(--ink),.4);animation:typedot 1.1s ease infinite .15s"></span>
+                          <span style="width:6px;height:6px;border-radius:50%;background:rgba(var(--ink),.4);animation:typedot 1.1s ease infinite .3s"></span>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ chatHasOptions }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:6px">
+                        <sc-for list="{{ chatOptions }}" as="co" hint-placeholder-count="3">
+                          <button class="press" onClick="{{ co.onClick }}" style="border:1.5px solid var(--accent);background:var(--panel);color:var(--accent);font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:99px;cursor:pointer">{{ co.label }}</button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ hasChatSummary }}" hint-placeholder-val="{{ false }}">
+                <div style="background:linear-gradient(135deg,var(--glass1) 0%,var(--glass2) 100%);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:16px;margin-bottom:16px;box-shadow:0 20px 46px -18px var(--glow),inset 0 1px 1px rgba(255,255,255,.8)">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                    <div style="width:32px;height:32px;flex:none;border-radius:50%;background:var(--btn);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px -6px var(--glow)"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6L19.5 9l-4.4 3.4L16.4 18 12 14.8 7.6 18l1.3-5.6L4.5 9l5.6-1.4L12 2Z"/></svg></div>
+                    <div><div style="font-size:13.5px;font-weight:700;color:rgb(var(--ink))">Refine summary</div><div style="font-size:11px;color:rgba(var(--ink),.5)">How this estimate was sharpened</div></div>
+                  </div>
+                  <sc-for list="{{ chatSummary }}" as="cs" hint-placeholder-count="3">
+                    <div style="padding:10px 0;border-top:1px solid rgba(var(--ink),.07)"><div style="font-size:12px;color:rgba(var(--ink),.5);line-height:1.4">{{ cs.q }}</div><div style="font-size:13.5px;font-weight:700;color:rgb(var(--ink));margin-top:3px">{{ cs.a }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ notFromHistory }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:10px">
+                <button class="press" onClick="{{ saveResult }}" style="flex:1;border:none;cursor:pointer;padding:17px;border-radius:18px;font-family:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--btn);box-shadow:0 14px 30px -12px var(--glow)">Save result</button>
+              </div>
+              <button class="press" onClick="{{ goHistory }}" style="width:100%;margin-top:10px;border:1px solid rgba(255,255,255,.5);cursor:pointer;padding:15px;border-radius:18px;font-family:inherit;font-size:14.5px;font-weight:700;color:rgb(var(--ink));background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);display:flex;align-items:center;justify-content:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l3 2"/></svg>View history</button>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <!-- ===== LENS · HOME (Discover / Care / Explore) ===== -->
+          <sc-if value="{{ isLensHome }}" hint-placeholder-val="{{ false }}">
+            <div style="position:relative;overflow:hidden;border-radius:24px;background:var(--btn);padding:22px;margin-bottom:16px;box-shadow:0 18px 40px -18px var(--glow)">
+              <div style="width:40px;height:40px;border-radius:13px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px"><div style="width:22px;height:22px">{{ heroIcon }}</div></div>
+              <div style="font-size:19px;font-weight:800;color:#fff;line-height:1.25;letter-spacing:-.3px">{{ lensHeroTitle }}</div>
+              <div style="font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.82);margin-top:8px">{{ lensHeroSub }}</div>
+              <button class="press" onClick="{{ goScan }}" style="margin-top:16px;border:none;cursor:pointer;padding:12px 20px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);background:var(--surface);box-shadow:0 8px 18px -8px rgba(0,0,0,.3)">{{ ctaText }}</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:13px;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.55);border-radius:18px;padding:12px 15px;margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)">
+              <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M3 12h18"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px"><span style="font-size:13.5px;font-weight:700;color:rgb(var(--ink))">{{ usageText }}</span><span style="font-size:11px;font-weight:600;color:rgba(var(--ink),.42)">{{ usageResets }}</span></div>
+                <div style="height:6px;border-radius:99px;background:rgba(var(--ink),.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--btn);width:{{ usageBarPct }};transition:width .5s ease"></div></div>
+              </div>
+            </div>
+            <sc-if value="{{ hasCareTip }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:15px 16px;margin-bottom:16px;box-shadow:0 8px 22px -16px rgba(0,0,0,.25)">
+                <div style="width:40px;height:40px;flex:none;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6Z"/><circle cx="12" cy="9" r="2"/></svg></div>
+                <div><div style="font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--accent)">Care tip of the day</div><div style="font-size:13.5px;line-height:1.45;color:rgba(var(--ink),.7);margin-top:3px">{{ careTip }}</div></div>
+              </div>
+            </sc-if>
+            <div style="font-size:16px;font-weight:700;color:rgb(var(--ink));margin:2px 0 10px">{{ lensCardsTitle }}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+              <sc-for list="{{ lensCards }}" as="c" hint-placeholder-count="4">
+                <div style="background:var(--tint);backdrop-filter:blur(14px) saturate(1.7);-webkit-backdrop-filter:blur(14px) saturate(1.7);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:15px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between">
+                  <div style="width:32px;height:32px;border-radius:10px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--accent)"><div style="width:18px;height:18px">{{ heroIcon }}</div></div>
+                  <div><div style="font-size:14px;font-weight:700;color:rgb(var(--ink))">{{ c.name }}</div><div style="font-size:11.5px;color:rgba(var(--ink),.5);margin-top:1px">{{ c.tag }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:16px;font-weight:700;color:rgb(var(--ink));margin:2px 0 10px">Recent scans</div>
+            <sc-for list="{{ lensRecent }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:13px;background:var(--soft);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:12px 14px;margin-bottom:10px">
+                <div style="width:44px;height:44px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel);color:var(--accent)"><div style="width:23px;height:23px">{{ heroIcon }}</div></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:rgb(var(--ink))">{{ r.name }}</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ r.meta }}</div></div>
+                <div style="font-size:11px;color:rgba(var(--ink),.4)">{{ r.time }}</div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== LENS · LIST (FreshLens History) ===== -->
+          <sc-if value="{{ isLensList }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 4px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">{{ screenTitle }}</h2>
+            <p style="margin:0 0 16px;font-size:13.5px;color:rgba(var(--ink),.55)">{{ screenSub }}</p>
+            <sc-for list="{{ lensRecent }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:12px 14px;margin-bottom:10px;box-shadow:0 8px 20px -16px rgba(0,0,0,.25)">
+                <div style="width:46px;height:46px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--accent)"><div style="width:24px;height:24px">{{ heroIcon }}</div></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink))">{{ r.name }}</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ r.meta }}</div></div>
+                <div style="font-size:11px;color:rgba(var(--ink),.4)">{{ r.time }}</div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== LENS · COLLECTION (Saved / My Plants / Collection) ===== -->
+          <sc-if value="{{ isLensCollection }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 4px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">{{ screenTitle }}</h2>
+            <p style="margin:0 0 16px;font-size:13.5px;color:rgba(var(--ink),.55)">{{ screenSub }}</p>
+            <sc-if value="{{ hasCollectionGrid }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+                <sc-for list="{{ collectionGrid }}" as="col" hint-placeholder-count="4">
+                  <div style="border-radius:20px;padding:16px;background:var(--btn);box-shadow:0 12px 28px -18px var(--glow);min-height:110px;display:flex;flex-direction:column;justify-content:space-between">
+                    <div style="width:36px;height:36px;border-radius:11px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:#fff"><div style="width:20px;height:20px">{{ heroIcon }}</div></div>
+                    <div><div style="font-size:15px;font-weight:800;color:#fff">{{ col.name }}</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:1px">{{ col.sub }}</div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-for list="{{ collectionItems }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:13px 14px;margin-bottom:10px;box-shadow:0 8px 20px -16px rgba(0,0,0,.25)">
+                <div style="width:46px;height:46px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--accent)"><div style="width:24px;height:24px">{{ heroIcon }}</div></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink))">{{ s.name }}</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ s.meta }}</div></div>
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== LENS · REMINDERS (PlantLens) ===== -->
+          <sc-if value="{{ isLensReminders }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 4px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">Reminders</h2>
+            <p style="margin:0 0 16px;font-size:13.5px;color:rgba(var(--ink),.55)">Upcoming plant care · mock schedule.</p>
+            <sc-for list="{{ reminderCards }}" as="rm" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:14px;margin-bottom:11px;box-shadow:0 8px 20px -16px rgba(0,0,0,.25)">
+                <div style="width:48px;height:48px;flex:none;border-radius:15px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5-2-8H7c0 3-2 5-2 8a7 7 0 0 0 7 7Z"/><path d="M12 7V3"/></svg></div>
+                <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink))">{{ rm.plant }}</div><div style="font-size:12.5px;color:rgba(var(--ink),.55);margin-top:1px">{{ rm.note }}</div></div>
+                <div style="font-size:12px;font-weight:600;color:var(--accent);text-align:right">{{ rm.when }}</div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== LENS · COMPARE (RockLens) ===== -->
+          <sc-if value="{{ isLensCompare }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 4px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">Compare</h2>
+            <p style="margin:0 0 18px;font-size:13.5px;color:rgba(var(--ink),.55)">Compare two possible stones side by side · placeholder.</p>
+            <div style="display:flex;gap:12px;align-items:stretch;margin-bottom:16px">
+              <div style="flex:1;border-radius:20px;border:1.5px dashed rgba(var(--ink),.18);background:var(--tint);padding:22px 14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><div style="width:48px;height:48px;border-radius:15px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--accent)"><div style="width:26px;height:26px">{{ heroIcon }}</div></div><div style="font-size:13px;font-weight:700;color:rgb(var(--ink))">Rose Quartz</div><div style="font-size:11.5px;color:rgba(var(--ink),.5)">78% match</div></div>
+              <div style="align-self:center;font-size:13px;font-weight:800;color:rgba(var(--ink),.4)">VS</div>
+              <div style="flex:1;border-radius:20px;border:1.5px dashed rgba(var(--ink),.18);background:var(--tint);padding:22px 14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;justify-content:center"><div style="width:48px;height:48px;border-radius:15px;background:var(--panel);display:flex;align-items:center;justify-content:center;color:rgba(var(--ink),.3)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><div style="font-size:13px;font-weight:700;color:rgba(var(--ink),.45)">Add a stone</div></div>
+            </div>
+            <sc-for list="{{ compareRows }}" as="cr" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:15px;padding:13px 16px;margin-bottom:9px;box-shadow:0 8px 18px -16px rgba(0,0,0,.25)"><span style="font-size:13px;font-weight:700;color:rgb(var(--ink))">{{ cr.a }}</span><span style="font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(var(--ink),.4)">{{ cr.label }}</span><span style="font-size:13px;font-weight:600;color:rgba(var(--ink),.3)">{{ cr.b }}</span></div>
+            </sc-for>
+          </sc-if>
+
+          <!-- ===== LENS · GUIDE (all non-plate) ===== -->
+          <sc-if value="{{ isLensGuide }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:0 0 4px;font-size:26px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.5px">Guide</h2>
+            <p style="margin:0 0 16px;font-size:13.5px;color:rgba(var(--ink),.55)">{{ screenSub }}</p>
+            <sc-for list="{{ guideCards }}" as="g" hint-placeholder-count="4">
+              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:15px 16px;margin-bottom:11px;box-shadow:0 8px 20px -16px rgba(0,0,0,.25)">
+                <div style="width:44px;height:44px;flex:none;border-radius:14px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5z"/><path d="M8 7h8M8 11h6"/></svg></div>
+                <div style="flex:1"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink))">{{ g.title }}</div><div style="font-size:12.5px;line-height:1.5;color:rgba(var(--ink),.58);margin-top:2px">{{ g.body }}</div></div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink),.3)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:12px"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </sc-for>
+            <div style="display:flex;gap:10px;align-items:flex-start;background:var(--soft);border:1px solid rgba(255,255,255,.45);border-radius:16px;padding:13px 15px;margin-top:6px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg>
+              <span style="font-size:12px;line-height:1.5;color:rgba(var(--ink),.6)">{{ disclaimer }}</span>
+            </div>
+          </sc-if>
+
+        </div>
+      </sc-if>
+
+      <!-- ============ DYNAMIC BOTTOM NAV ============ -->
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;bottom:16px;left:16px;right:16px;z-index:45">{{ bottomNav }}</div>
+      </sc-if>
+
+      <!-- ============ SETTINGS SHEET ============ -->
+      <sc-if value="{{ showSettings }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeSettings }}" style="position:absolute;inset:0;z-index:70;background:rgba(6,8,12,.5);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:fadein .25s ease"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;z-index:71;border-radius:30px 30px 46px 46px;padding:22px 20px 30px;background:var(--surface);border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -24px 60px -20px rgba(0,0,0,.5);animation:fadeup .32s cubic-bezier(.22,1,.36,1)">
+          <div style="width:38px;height:5px;border-radius:99px;background:rgba(var(--ink),.18);margin:0 auto 16px"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <div style="font-size:21px;font-weight:800;color:rgb(var(--ink));letter-spacing:-.4px">Settings</div>
+            <button onClick="{{ closeSettings }}" class="press" style="width:34px;height:34px;border-radius:11px;border:none;cursor:pointer;background:var(--tint);display:flex;align-items:center;justify-content:center;color:rgb(var(--ink))"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+          </div>
+
+          <!-- token usage -->
+          <div style="border-radius:22px;padding:18px;margin-bottom:14px;background:linear-gradient(135deg,var(--glass1) 0%,var(--glass2) 100%);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 1px rgba(255,255,255,.2)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:rgba(var(--ink),.5)">Scan tokens</div>
+              <div style="font-size:12.5px;font-weight:700;color:rgba(var(--ink),.5)">{{ tokLeft }}</div>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin:6px 0 12px"><span style="font-size:34px;font-weight:800;color:rgb(var(--ink));line-height:1">{{ tokUsed }}</span><span style="font-size:15px;font-weight:600;color:rgba(var(--ink),.42)">/ {{ tokTotal }} used today</span></div>
+            <div style="height:9px;border-radius:99px;background:rgba(var(--ink),.1);overflow:hidden;margin-bottom:16px"><div style="height:100%;border-radius:99px;width:{{ tokPct }};background:var(--btn);box-shadow:0 0 12px -2px var(--glow)"></div></div>
+            <sc-for list="{{ usageRows }}" as="u" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:11px">
+                <span style="width:8px;height:8px;border-radius:50%;flex:none;background:{{ u.accent }}"></span>
+                <span style="flex:none;width:66px;font-size:13px;font-weight:700;color:rgb(var(--ink))">{{ u.name }}</span>
+                <div style="flex:1;height:6px;border-radius:99px;background:rgba(var(--ink),.1);overflow:hidden"><div style="height:100%;border-radius:99px;width:{{ u.pct }};background:{{ u.accent }}"></div></div>
+                <span style="flex:none;font-size:12px;font-weight:700;color:rgba(var(--ink),.5);font-variant-numeric:tabular-nums">{{ u.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- dark mode -->
+          <div onClick="{{ toggleDark }}" class="press" style="cursor:pointer;display:flex;align-items:center;gap:13px;border-radius:20px;padding:15px 16px;background:var(--tint);backdrop-filter:blur(16px) saturate(1.7);-webkit-backdrop-filter:blur(16px) saturate(1.7);border:1px solid rgba(255,255,255,.14)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:rgb(var(--ink))"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></div>
+            <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:700;color:rgb(var(--ink))">Dark mode</div><div style="font-size:12px;color:rgba(var(--ink),.5)">{{ darkModeSub }}</div></div>
+            <div style="width:50px;height:30px;border-radius:99px;flex:none;padding:3px;transition:background .3s ease;background:{{ darkTrackBg }};display:flex;justify-content:{{ darkKnobJustify }}"><div style="width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:all .3s ease"></div></div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:448,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  // ============================================================
+  //  scannerModes — config that drives EVERYTHING per lens:
+  //  theme, bottom tabs, screen content, copy, disclaimers, data.
+  //  Each lens is effectively its own mini-app inside ScanPilot.
+  // ============================================================
+  modes = [
+    {
+      id:'plate', name:'PlateLens', shortName:'Food', lensType:'Food & Meal Lens', subjectWord:'meal', dailyLimit:5,
+      tagline:'Scan meals. Track nutrition. Eat smarter.', cta:'Scan Meal',
+      description:'Analyze meals, estimate nutrition, and track your daily intake.',
+      accent:'#22A45D', glow:'rgba(40,190,110,.5)',
+      bgStyle:'radial-gradient(120% 95% at 50% -8%,#ffffff 0%,#ffffff 60%,#f3faf5 100%)',
+      buttonGradient:'linear-gradient(135deg,#2FBE6E,#1E9B54)',
+      glassTint:'rgba(247,252,249,.62)', softTint:'rgba(240,249,243,.62)',
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+      scanInstruction:'Place your full meal in frame with even lighting for the best estimate.',
+      disclaimer:'Nutrition values are AI-generated estimates and may not be fully accurate. For medical, allergy-related, fitness, or strict diet needs, verify with official nutrition labels or a qualified professional.',
+      // default first tab = tabs[0]; Scan is always the elevated center slot.
+      tabs:[
+        {id:'today',label:'Today'},{id:'calendar',label:'Calendar'},
+        {id:'scan',label:'Scan',center:true},
+        {id:'history',label:'History'},{id:'goal',label:'Goal'}
+      ],
+      result:{title:'Avocado Toast with Poached Egg',subtitle:'Breakfast · 1 serving',
+        description:'Sourdough toast topped with mashed avocado, a poached egg and fresh arugula.',confidence:95,
+        caution:'Contains egg and gluten (common allergens). Calorie and fat content can vary with portion size and added ingredients.',
+        fields:[{label:'Calories',value:'330 kcal'},{label:'Protein',value:'12 g'},{label:'Carbs',value:'27 g'},{label:'Fat',value:'21 g'}],
+        lists:[{title:'Benefits',items:['Rich in healthy fats from avocado','Good source of protein from the poached egg','Fiber from avocado, sourdough and arugula','Provides various vitamins and minerals']}],
+        portionQs:['What type of bread was used?','Was any oil or butter added?','How much avocado was used?','How many eggs?','What was the serving size?'],
+        chat:[
+          {ai:'Nice pick! 🥑 What kind of bread was the base?',options:['Sourdough','Whole wheat','White','Rye']},
+          {ai:'Got it. Any oil or butter added?',options:['A little butter','Olive oil','None']},
+          {ai:'How much avocado would you say?',options:['Half','A whole one','Just a smear']},
+          {ai:'And how many eggs?',options:['One','Two','None']},
+          {ai:'Last one — what serving size felt right?',options:['Small','Regular','Large']}
+        ]},
+      history:[
+        {name:'Avocado Toast with Poached Egg',meta:'330 kcal · Breakfast',time:'Today',cal:'330',day:3},
+        {name:'Grilled Chicken Bowl',meta:'540 kcal · Lunch',time:'Yesterday',cal:'540',day:2},
+        {name:'Greek Salad',meta:'280 kcal · Lunch',time:'2d ago',cal:'280',day:1}
+      ]
+    },
+    {
+      id:'fresh', name:'FreshLens', shortName:'Produce', subjectWord:'produce', dailyLimit:10,
+      tagline:'Pick the ripe one', cta:'Scan produce',
+      description:'Identify fruits and vegetables, check freshness and learn how to store them.',
+      accent:'#5C9E2E', glow:'rgba(120,200,70,.5)',
+      bgStyle:'radial-gradient(120% 95% at 50% -8%,#ffffff 0%,#ffffff 60%,#f7fbee 100%)',
+      buttonGradient:'linear-gradient(135deg,#8DC63F,#5C9E2E)',
+      glassTint:'rgba(249,253,242,.62)', softTint:'rgba(244,251,231,.62)',
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 7-8s7 4 7 8a7 7 0 0 1-7 7Z"/><path d="M11 5c0-2 1.5-3 3.5-3"/></svg>',
+      scanInstruction:'Frame a single fruit or vegetable up close so we can read its color and skin.',
+      disclaimer:'Produce identification and freshness are AI estimates. Always inspect produce before eating.',
+      tabs:[
+        {id:'discover',label:'Discover'},{id:'history',label:'History'},
+        {id:'scan',label:'Scan',center:true},
+        {id:'saved',label:'Saved'},{id:'guide',label:'Guide'}
+      ],
+      result:{title:'Sayote',aka:'Chayote',subtitle:'Vegetable · Gourd',
+        description:'A mild green gourd with crisp flesh, common in home cooking and soups.',confidence:88,
+        caution:'Freshness is a visual estimate. Always inspect produce before eating.',
+        fields:[{label:'Category',value:'Gourd'},{label:'Freshness',value:'Looks fresh'},{label:'Calories',value:'Low'},{label:'Storage',value:'Fridge 1–2 wk'}],
+        lists:[{title:'Benefits & nutrients',items:['Low in calories','Good source of dietary fiber','Contains vitamin C and folate','Hydrating with a mild flavor']},{title:'How to eat & cook',items:['Sauté with garlic and onion','Add to soups and stews','Steam and season lightly','Grate raw into fresh salads']},{title:'Storage tips',items:['Refrigerate in the crisper drawer','Keeps fresh for 1–2 weeks','Do not wash until ready to use']}]},
+      history:[
+        {name:'Banana',meta:'Fruit · Ripe',time:'Today'},
+        {name:'Spinach',meta:'Vegetable · Fresh',time:'Yesterday'},
+        {name:'Avocado',meta:'Fruit · Firm',time:'3d ago'}
+      ],
+      content:{
+        heroTitle:'Identify unfamiliar produce instantly',
+        heroSub:'Point your camera at any fruit or vegetable to learn what it is, how fresh it is, and how to use it.',
+        cardsTitle:'Featured produce',
+        cards:[{name:'Mango',tag:'In season'},{name:'Kale',tag:'Superfood'},{name:'Dragon Fruit',tag:'Exotic'},{name:'Beetroot',tag:'Root crop'}],
+        grid:[{name:'Fruits',sub:'6 saved'},{name:'Vegetables',sub:'4 saved'},{name:'Herbs',sub:'2 saved'},{name:'Root Crops',sub:'3 saved'}],
+        items:[{name:'Banana',meta:'Fruit · Ripe'},{name:'Spinach',meta:'Vegetable · Fresh'},{name:'Avocado',meta:'Fruit · Firm'}],
+        guide:[{title:'Ripeness guide',body:'Tell when fruit is ready to eat by color and firmness.'},{title:'Storage tips',body:'Keep produce fresh longer at the right temperature.'},{title:'Local names',body:'Common and regional names for the same produce.'},{title:'How to cook',body:'Simple prep ideas for everyday vegetables.'}]
+      }
+    },
+    {
+      id:'plant', name:'PlantLens', shortName:'Plants', subjectWord:'plant', dailyLimit:5,
+      tagline:'Meet your plant', cta:'Scan a plant',
+      description:'Identify plants and flowers, then keep every leaf thriving.',
+      accent:'#158A5A', glow:'rgba(30,170,110,.5)',
+      bgStyle:'radial-gradient(120% 95% at 50% -8%,#ffffff 0%,#ffffff 60%,#f2faf6 100%)',
+      buttonGradient:'linear-gradient(135deg,#2FB37C,#158A5A)',
+      glassTint:'rgba(244,252,248,.62)', softTint:'rgba(238,250,244,.62)',
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11"/><path d="M12 11C12 7 9 4 5 4c0 4 3 7 7 7Z"/><path d="M12 13c0-3.5 3-6 6.5-6 0 3.5-3 6-6.5 6Z"/></svg>',
+      scanInstruction:'Capture a clear leaf, flower or stem. A well-lit close-up improves the match.',
+      disclaimer:'Do not eat or handle a wild plant based only on AI identification. Verify toxicity with a professional.',
+      tabs:[
+        {id:'care',label:'Care'},{id:'myplants',label:'My Plants'},
+        {id:'scan',label:'Scan',center:true},
+        {id:'reminders',label:'Reminders'},{id:'guide',label:'Guide'}
+      ],
+      result:{title:'Monstera Deliciosa',sci:'Monstera deliciosa',subtitle:'Houseplant · Tropical',
+        description:'A popular tropical houseplant known for its large, glossy split leaves.',confidence:84,
+        caution:'Do not eat wild plants based only on AI identification. Verify toxicity with a professional.',
+        fields:[{label:'Type',value:'Tropical'},{label:'Difficulty',value:'Easy'},{label:'Water',value:'Weekly'},{label:'Sunlight',value:'Bright indirect'},{label:'Soil',value:'Well-draining'},{label:'Safety',value:'Toxic to pets'}],
+        lists:[{title:'Common issues',items:['Yellowing leaves often mean overwatering','Brown edges suggest low humidity','Leggy growth means it needs more light']}]},
+      history:[
+        {name:'Snake Plant',meta:'Easy care',time:'2d ago'},
+        {name:'Pothos',meta:'Low light',time:'Last week'},
+        {name:'Fiddle Leaf Fig',meta:'Bright light',time:'2 wk ago'}
+      ],
+      content:{
+        heroTitle:'Your plant care companion',
+        heroSub:'Identify plants, track watering, and keep every leaf thriving in one calm dashboard.',
+        careTip:'Rotate plants a quarter turn each week so every side gets even light.',
+        cardsTitle:'Your garden at a glance',
+        cards:[{name:'Water today',tag:'1 plant'},{name:'Needs light',tag:'2 plants'},{name:'Healthy',tag:'4 plants'},{name:'New',tag:'Add a plant'}],
+        items:[{name:'Monstera Deliciosa',meta:'Easy · Weekly water'},{name:'Snake Plant',meta:'Easy · Biweekly water'},{name:'Pothos',meta:'Easy · Weekly water'},{name:'Fiddle Leaf Fig',meta:'Medium · Weekly water'}],
+        reminders:[{plant:'Monstera Deliciosa',note:'Water ~250 ml',when:'Today, 6 PM'},{plant:'Snake Plant',note:'Check soil moisture',when:'Saturday'},{plant:'Pothos',note:'Mist the leaves',when:'Sunday'}],
+        guide:[{title:'Watering guide',body:'How much and how often for common houseplants.'},{title:'Sunlight guide',body:'Match each plant to the right light level.'},{title:'Pet toxicity',body:'Which plants to keep away from pets and kids.'},{title:'Repotting',body:'When and how to give roots more room.'}]
+      }
+    },
+    {
+      id:'rock', name:'RockLens', shortName:'Stones', subjectWord:'stone', dailyLimit:5,
+      tagline:'Read the stone', cta:'Scan a stone',
+      description:'Get a visual best-guess at rocks, minerals and gems from a photo.',
+      accent:'#6B6FB2', glow:'rgba(120,120,200,.5)',
+      bgStyle:'radial-gradient(120% 95% at 50% -8%,#ffffff 0%,#ffffff 60%,#f4f5fb 100%)',
+      buttonGradient:'linear-gradient(135deg,#8A8ED6,#6B6FB2)',
+      glassTint:'rgba(247,248,253,.62)', softTint:'rgba(242,244,251,.62)',
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l3 6-9 12L3 9Z"/><path d="M3 9h18M9 3 6 9l6 12M15 3l3 6-6 12"/></svg>',
+      scanInstruction:'Photograph the stone in natural light and capture its color, shine and texture.',
+      disclaimer:'Stone results are visual guesses only — not certified geological, gemstone or value testing.',
+      tabs:[
+        {id:'explore',label:'Explore'},{id:'collection',label:'Collection'},
+        {id:'scan',label:'Scan',center:true},
+        {id:'compare',label:'Compare'},{id:'guide',label:'Guide'}
+      ],
+      result:{title:'Amethyst (possible)',subtitle:'Quartz family',
+        description:'A purple variety of quartz. This is a visual best-guess only.',confidence:76,
+        caution:'Image-based result only. Not a certified mineral, gemstone, or value test.',
+        fields:[{label:'Category',value:'Mineral · Quartz'},{label:'Color',value:'Purple, glassy'},{label:'Texture',value:'Crystalline'},{label:'Hardness',value:'≈ 7 Mohs'},{label:'Appearance',value:'Translucent'},{label:'Uses',value:'Jewelry, decor'}],
+        lists:[{title:'Similar-looking stones',items:['Fluorite','Purple sapphire','Lepidolite','Charoite']}]},
+      history:[
+        {name:'Rose Quartz',meta:'Quartz · Pink',time:'3d ago'},
+        {name:'Obsidian',meta:'Volcanic glass',time:'Last week'},
+        {name:'Pyrite',meta:'Metallic gold',time:'2 wk ago'}
+      ],
+      content:{
+        heroTitle:'Explore rocks, minerals & gems',
+        heroSub:'Get a visual best-guess at any stone from a single photo, then build your collection.',
+        cardsTitle:'Discover geology',
+        cards:[{name:'Quartz family',tag:'Common'},{name:'Igneous rocks',tag:'Volcanic'},{name:'Gemstones',tag:'Precious'},{name:'Crystals',tag:'Collectible'}],
+        items:[{name:'Rose Quartz',meta:'Quartz · 78% match'},{name:'Obsidian',meta:'Volcanic glass · 85%'},{name:'Pyrite',meta:'Sulfide · 72%'},{name:'Amethyst',meta:'Quartz · 76%'}],
+        compare:[{a:'Purple, glassy',label:'Appearance',b:'—'},{a:'≈ 7 Mohs',label:'Hardness',b:'—'},{a:'Jewelry, decor',label:'Uses',b:'—'}],
+        guide:[{title:'Hardness (Mohs)',body:'Scratch tests to estimate a mineral’s hardness.'},{title:'Streak test',body:'The color a mineral leaves on unglazed tile.'},{title:'Luster & texture',body:'How light reflects off the surface.'},{title:'Safety & certification',body:'Why lab testing is needed for real value.'}]
+      }
+    }
+  ];
+
+  spacing = 128;
+
+  // Mock July-2026 daily meal log for PlateLens calendar (name, time, cal + macros in g)
+  plateLog = {
+    1:[{name:'Overnight Oats',time:'8:10 AM',cal:320,carbs:54,protein:12,fat:8},{name:'Grilled Salmon & Greens',time:'1:20 PM',cal:480,carbs:6,protein:42,fat:30}],
+    2:[{name:'Greek Yogurt Bowl',time:'8:30 AM',cal:240,carbs:30,protein:18,fat:6},{name:'Chicken Wrap',time:'12:45 PM',cal:520,carbs:48,protein:34,fat:20},{name:'Apple',time:'4:00 PM',cal:95,carbs:25,protein:0,fat:0}],
+    3:[{name:'Avocado Toast with Poached Egg',time:'8:15 AM',cal:330,carbs:27,protein:12,fat:21},{name:'Grilled Chicken Bowl',time:'1:00 PM',cal:540,carbs:45,protein:46,fat:18},{name:'Greek Salad',time:'7:30 PM',cal:280,carbs:18,protein:9,fat:22}],
+    4:[{name:'Berry Smoothie',time:'9:00 AM',cal:210,carbs:38,protein:8,fat:4},{name:'Turkey Sandwich',time:'1:15 PM',cal:430,carbs:44,protein:28,fat:16}],
+    5:[{name:'Buttermilk Pancakes',time:'8:45 AM',cal:520,carbs:72,protein:12,fat:18},{name:'Caesar Salad',time:'12:30 PM',cal:360,carbs:14,protein:20,fat:26}],
+    8:[{name:'Eggs & Sourdough',time:'8:20 AM',cal:380,carbs:32,protein:20,fat:19}],
+    10:[{name:'Burrito Bowl',time:'1:10 PM',cal:720,carbs:78,protein:34,fat:28}],
+    12:[{name:'Pesto Pasta',time:'7:45 PM',cal:640,carbs:82,protein:22,fat:24}]
+  };
+
+  state = {
+    welcome:true, active:0, dragFrac:0, dragging:false,
+    tab:'today',                       // active tab id within the current lens
+    scanning:false, query:'', fromHistory:false, usage:{plate:2,fresh:2,plant:1,rock:1}, chat:{step:0,answers:[],typing:false},
+    goal:{ sex:'female', age:22, unit:'metric', height:181, weight:52, activity:1.375, target:'gain', daily:2300 },
+    consumed:{ cal:330, carbs:27, protein:12, fat:21, targets:{carbs:275, protein:60, fat:70} },
+    calMonth:6, calYear:2026, calSelected:3,
+    dark:false, showSettings:false
+  };
+
+  // ---------------- WHEEL DRAG LOGIC ----------------
+  onDown = (e) => { this._startX=e.clientX; this._moved=false; this._dragging=true; this.setState({dragging:true}); try{e.currentTarget.setPointerCapture(e.pointerId);}catch(_){} };
+  onMove = (e) => { if(!this._dragging) return; const dx=e.clientX-this._startX; if(Math.abs(dx)>4) this._moved=true; this.setState({dragFrac:dx/this.spacing}); };
+  onUp = () => { if(!this._dragging) return; this._dragging=false; let n=Math.round(this.state.active-this.state.dragFrac); n=Math.max(0,Math.min(this.modes.length-1,n)); this.switchMode(n); };
+  select = (i) => { if(this._moved) return; this.switchMode(i); };
+
+  // On lens switch: reset to that lens's default tab UNLESS the user is on Scan.
+  switchMode(next){
+    const keepScan = (this.state.tab==='scan');
+    const def = this.modes[next].tabs[0].id;
+    this.setState({ active:next, dragFrac:0, dragging:false, tab: keepScan ? 'scan' : def });
+  }
+
+  cardStyle(i){
+    const rel=(i-this.state.active)+this.state.dragFrac, a=Math.abs(rel);
+    return {
+      position:'absolute',left:'50%',top:'50%',width:'132px',height:'156px',marginLeft:'-66px',marginTop:'-78px',
+      transform:`translateX(${rel*this.spacing}px) perspective(900px) rotateY(${Math.max(-42,Math.min(42,rel*-22))}deg) scale(${Math.max(0.5,1-a*0.24)})`,
+      filter:`blur(${Math.min(6,a*3)}px)`, opacity:Math.max(0.18,1-a*0.42), zIndex:100-Math.round(a*10),
+      transition:this.state.dragging?'none':'transform .55s cubic-bezier(.34,1.4,.5,1),filter .4s ease,opacity .4s ease',
+      cursor:'pointer', touchAction:'none'
+    };
+  }
+  buildWheel(){
+    const cards=this.modes.map((m,i)=>{
+      const on=i===this.state.active;
+      const _lim=m.dailyLimit||5, _left=_lim-Math.min(_lim,(this.state.usage&&this.state.usage[m.id])||0);
+      return React.createElement('div',{key:m.id,style:this.cardStyle(i),onClick:()=>this.select(i)},
+        React.createElement('div',{style:{position:'absolute',inset:'-18px',borderRadius:'32px',background:m.glow,filter:'blur(26px)',opacity:on?0.9:0,transition:'opacity .5s ease'}}),
+        React.createElement('div',{style:{position:'relative',width:'100%',height:'100%',borderRadius:'26px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'12px',background:'rgba(255,255,255,.55)',backdropFilter:'blur(22px) saturate(1.8)',WebkitBackdropFilter:'blur(22px) saturate(1.8)',border:'1px solid rgba(255,255,255,.7)',boxShadow:on?'0 22px 46px -16px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 .5px rgba(255,255,255,.4)':'0 10px 24px -14px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.6)'}},
+          React.createElement('div',{style:{width:'44px',height:'44px',color:m.accent},dangerouslySetInnerHTML:{__html:m.icon}}),
+          React.createElement('div',{style:{fontSize:'15px',fontWeight:800,color:'rgb(var(--ink))',letterSpacing:'-.3px'}},m.name),
+          React.createElement('div',{style:{fontSize:'11px',fontWeight:600,color:'rgba(var(--ink),.5)'}},m.shortName),
+          React.createElement('div',{style:{fontSize:'10px',fontWeight:700,color:m.accent,marginTop:'1px',opacity:on?1:0,transition:'opacity .4s ease'}},`${_left} scans left`)
+        )
+      );
+    });
+    return React.createElement('div',{onPointerDown:this.onDown,onPointerMove:this.onMove,onPointerUp:this.onUp,onPointerCancel:this.onUp,style:{position:'relative',height:'204px',touchAction:'none',userSelect:'none',WebkitUserSelect:'none',marginBottom:'4px'}},cards);
+  }
+
+  // hex (#RRGGBB) -> rgba string with given alpha
+  hexA(hex,a){const h=hex.replace('#','');const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h,16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+
+  // ---------------- CALORIE RING (concentric multi-ring) ----------------
+  buildRing(){
+    const g=this.state.goal,c=this.state.consumed,t=c.targets,size=200,cx=100,cy=100,sw=13;
+    const rings=[{r:82,col:'#34C759',v:c.cal,m:g.daily},{r:64,col:'#FF9F0A',v:c.carbs,m:t.carbs},{r:46,col:'#FF375F',v:c.protein,m:t.protein},{r:28,col:'#0A84FF',v:c.fat,m:t.fat}];
+    const layers=[];
+    rings.forEach((ring,i)=>{const circ=2*Math.PI*ring.r,pct=Math.min(1,ring.v/ring.m);
+      layers.push(React.createElement('circle',{key:'b'+i,cx,cy,r:ring.r,fill:'none',stroke:'rgba(var(--ink),.08)',strokeWidth:sw}));
+      layers.push(React.createElement('circle',{key:'f'+i,cx,cy,r:ring.r,fill:'none',stroke:ring.col,strokeWidth:sw,strokeLinecap:'round',strokeDasharray:circ,strokeDashoffset:circ*(1-pct),style:{transition:'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)'}}));
+    });
+    return React.createElement('svg',{viewBox:`0 0 ${size} ${size}`,style:{width:'196px',height:'196px',transform:'rotate(-90deg)'}},layers);
+  }
+
+  // ---------------- DYNAMIC BOTTOM NAV ----------------
+  tabIcon(id){
+    const p={
+      today:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>',
+      calendar:'<rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
+      history:'<path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l3 2"/>',
+      goal:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>',
+      discover:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 5.3-5.3 2.2 2.2-5.3 5.3-2.2Z"/>',
+      saved:'<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+      guide:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5z"/><path d="M4 4.5v15"/>',
+      care:'<path d="M12 3a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6Z"/><circle cx="12" cy="9" r="2"/>',
+      myplants:'<path d="M12 22V11"/><path d="M12 11C12 7 9 4 5 4c0 4 3 7 7 7Z"/><path d="M12 13c0-3.5 3-6 6.5-6 0 3.5-3 6-6.5 6Z"/>',
+      reminders:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+      explore:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 5.3-5.3 2.2 2.2-5.3 5.3-2.2Z"/>',
+      collection:'<path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 12 10 5 10-5M2 17l10 5 10-5"/>',
+      compare:'<path d="M12 3v18"/><path d="M5 8 3 13h4L5 8ZM19 8l-2 5h4l-2-5Z"/><path d="M4 8h16"/>'
+    };
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(p[id]||'')+'</svg>';
+  }
+  buildNav(){
+    const m=this.modes[this.state.active], acc=m.accent;
+    const items=m.tabs.map(t=>{
+      const active = this.state.tab===t.id || (t.id==='scan' && this.state.tab==='result');
+      if(t.center){
+        // center Scan button — consistent elevated circle, recolored per lens
+        return React.createElement('button',{key:'scan',onClick:()=>this.goTab('scan'),className:'press',style:{border:'none',cursor:'pointer',width:'58px',height:'58px',marginTop:'-26px',borderRadius:'50%',background:m.buttonGradient,boxShadow:'0 12px 26px -8px '+m.glow+',inset 0 1px 0 rgba(255,255,255,.4)',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',flex:'none'}},
+          React.createElement('svg',{width:26,height:26,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round'},
+            React.createElement('path',{d:'M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z'}),
+            React.createElement('circle',{cx:12,cy:13,r:3.2})
+          )
+        );
+      }
+      return React.createElement('button',{key:t.id,onClick:()=>this.goTab(t.id),style:{border:'none',background:'none',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',gap:'3px',padding:'4px 6px',flex:1,color:active?acc:'rgba(var(--ink),.42)',transition:'color .3s ease'}},
+        React.createElement('div',{style:{width:'22px',height:'22px'},dangerouslySetInnerHTML:{__html:this.tabIcon(t.id)}}),
+        React.createElement('span',{style:{fontSize:'9.5px',fontWeight:600,letterSpacing:'.2px',whiteSpace:'nowrap'}},t.label)
+      );
+    });
+    // key={mode.id} → the bar re-mounts on lens change so labels/icons fade in
+    return React.createElement('div',{key:m.id,style:{display:'flex',alignItems:'center',justifyContent:'space-around',gap:'2px',padding:'9px 10px',borderRadius:'26px',background:'rgba(255,255,255,.58)',backdropFilter:'blur(26px) saturate(1.5)',WebkitBackdropFilter:'blur(26px) saturate(1.5)',border:'1px solid rgba(255,255,255,.6)',boxShadow:'0 14px 40px -12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.7)',animation:'fadeup .4s ease'}},items);
+  }
+
+  // ---------------- handlers ----------------
+  goTab = (t) => this.setState({ tab:t, scanning:false });
+  openSettings = () => this.setState({ showSettings:true });
+  closeSettings = () => this.setState({ showSettings:false });
+  toggleDark = () => this.setState(st=>({ dark:!st.dark }));
+  dismissWelcome = () => this.setState({ welcome:false });
+  startScan = () => {
+    const id=this.modes[this.state.active].id, lim=this.modes[this.state.active].dailyLimit||5;
+    if((this.state.usage[id]||0)>=lim) return;
+    this.setState(st=>({scanning:true, fromHistory:false, chat:{step:0,answers:[],typing:false}, usage:{...st.usage,[id]:Math.min(lim,(st.usage[id]||0)+1)}}));
+    clearTimeout(this._t); this._t=setTimeout(()=>this.setState({scanning:false,tab:'result'}),2200);
+  };
+  answerChat = (opt) => {
+    this.setState(st=>({chat:{step:st.chat.step+1, answers:[...st.chat.answers,opt], typing:true}}));
+    clearTimeout(this._ct); this._ct=setTimeout(()=>this.setState(st=>({chat:{...st.chat,typing:false}})),1050);
+  };
+  saveResult = () => this.setState(st=>({ tab: this.modes[st.active].tabs[0].id }));
+  setGoalField = (k,v) => this.setState(st=>({ goal:{...st.goal,[k]:v} }));
+  saveGoal = () => this.setState(st=>({ goal:{...st.goal,daily:this.estimateGoal(st.goal)}, tab:'today' }));
+  calPrev = () => this.setState(st=>{let m=st.calMonth-1,y=st.calYear; if(m<0){m=11;y--;} return{calMonth:m,calYear:y};});
+  calNext = () => this.setState(st=>{let m=st.calMonth+1,y=st.calYear; if(m>11){m=0;y++;} return{calMonth:m,calYear:y};});
+
+  estimateGoal(g){
+    const w=g.weight, h=g.height;
+    let bmr=10*w+6.25*h-5*g.age+(g.sex==='male'?5:-161);
+    let cal=bmr*Number(g.activity);
+    if(g.target==='lose') cal-=400; else if(g.target==='gain') cal+=400;
+    return Math.max(1200,Math.round(cal/10)*10);
+  }
+
+  iconEl(html){ return React.createElement('div',{style:{width:'100%',height:'100%'},dangerouslySetInnerHTML:{__html:html}}); }
+
+  renderVals(){
+    const s=this.state, m=this.modes[s.active], isPlate=m.id==='plate';
+    const tab=s.tab, firstTab=m.tabs[0].id;
+    // ----- theme (light / dark) -----
+    const dark=s.dark;
+    const T = dark ? {
+      ink:'232,234,242', surface:'#20232c', panel:'rgba(255,255,255,.06)',
+      glass1:'rgba(255,255,255,.09)', glass2:'rgba(255,255,255,.03)',
+      tint:'rgba(255,255,255,.06)', soft:'rgba(255,255,255,.035)',
+      bg:'radial-gradient(120% 120% at 50% -8%,#181b22 0%,#0d0f14 70%)'
+    } : {
+      ink:'25,27,33', surface:'#ffffff', panel:'rgba(255,255,255,.6)',
+      glass1:'rgba(255,255,255,.55)', glass2:'rgba(255,255,255,.28)',
+      tint:m.glassTint, soft:m.softTint, bg:m.bgStyle
+    };
+    // ----- token / scan usage across all lenses -----
+    const usageRows=this.modes.map(md=>{
+      const u=Math.min(md.dailyLimit||5,(s.usage&&s.usage[md.id])||0), l=md.dailyLimit||5;
+      return {name:md.shortName, accent:md.accent, used:u, limit:l, label:`${u} / ${l}`, pct:`${Math.round(u/l*100)}%`};
+    });
+    const tokUsed=usageRows.reduce((a,r)=>a+r.used,0), tokTotal=usageRows.reduce((a,r)=>a+r.limit,0);
+    const conf=m.result.confidence, confLabel=conf>=85?'High confidence':conf>=70?'Moderate confidence':'Low confidence';
+    const lim=m.dailyLimit||5, used=Math.min(lim,(s.usage&&s.usage[m.id])||0), left=lim-used;
+
+    // ----- screen routing -----
+    const homeTab = (tab===firstTab);
+    const isScan = tab==='scan', isResult = tab==='result';
+    const isPlateToday = isPlate && tab==='today';
+    const isPlateCalendar = isPlate && tab==='calendar';
+    const isPlateHistory = isPlate && tab==='history';
+    const isPlateGoal = isPlate && tab==='goal';
+    const isLensHome = !isPlate && homeTab;
+    const isLensList = !isPlate && tab==='history';        // FreshLens history
+    const isLensCollection = (!isPlate) && (tab==='saved'||tab==='myplants'||tab==='collection');
+    const isLensGuide = !isPlate && tab==='guide';
+    const isLensReminders = !isPlate && tab==='reminders';
+    const isLensCompare = !isPlate && tab==='compare';
+
+    // ----- calendar model -----
+    const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const first=new Date(s.calYear,s.calMonth,1).getDay();
+    const daysIn=new Date(s.calYear,s.calMonth+1,0).getDate();
+    const isJul2026 = s.calMonth===6 && s.calYear===2026;
+    const log = (isPlate && isJul2026) ? this.plateLog : {};
+    const goalCal = s.goal.daily;
+    const CIRC = 2*Math.PI*15;
+    const dayTotals=(meals)=>meals.reduce((a,x)=>({cal:a.cal+x.cal,carbs:a.carbs+x.carbs,protein:a.protein+x.protein,fat:a.fat+x.fat}),{cal:0,carbs:0,protein:0,fat:0});
+    const calDays=[];
+    for(let i=0;i<first;i++) calDays.push({day:'',centerBg:'transparent',color:'transparent',track:'transparent',ring:'transparent',dash:CIRC,offset:CIRC,onClick:()=>{}});
+    for(let d=1;d<=daysIn;d++){
+      const sel = d===s.calSelected;
+      const meals = log[d]||null;
+      const pct = meals ? Math.min(1, dayTotals(meals).cal/goalCal) : 0;
+      calDays.push({ day:String(d),
+        centerBg: sel ? m.accent : 'transparent',
+        color: sel ? '#fff' : (meals ? 'rgb(var(--ink))' : 'rgba(var(--ink),.42)'),
+        track: meals ? 'rgba(var(--ink),.1)' : 'transparent',
+        ring: meals ? m.accent : 'transparent',
+        dash: CIRC, offset: CIRC*(1-pct),
+        onClick:()=>this.setState({calSelected:d})
+      });
+    }
+    const selMeals = log[s.calSelected]||[];
+    const selTot = dayTotals(selMeals);
+    const calSelPct = `${Math.min(100,Math.round(selTot.cal/goalCal*100))}%`;
+    const mt=s.consumed.targets;
+    const calSelMacros=[
+      {label:'Carbs',value:selTot.carbs,color:'#FF9F0A',barPct:`${Math.min(100,Math.round(selTot.carbs/mt.carbs*100))}%`},
+      {label:'Protein',value:selTot.protein,color:'#FF375F',barPct:`${Math.min(100,Math.round(selTot.protein/mt.protein*100))}%`},
+      {label:'Fat',value:selTot.fat,color:'#0A84FF',barPct:`${Math.min(100,Math.round(selTot.fat/mt.fat*100))}%`}
+    ];
+
+    // ----- plate history search -----
+    const q=s.query.trim().toLowerCase();
+    const plateHistoryList=(m.history||[]).filter(h=>q===''||h.name.toLowerCase().includes(q));
+
+    // ----- goal form buttons -----
+    const segBtn=(on)=>({ color:on?'#fff':'rgba(var(--ink),.6)', bg:on?'var(--btn)':'rgba(255,255,255,.55)' });
+    const mSex=segBtn(s.goal.sex==='male'), fSex=segBtn(s.goal.sex==='female');
+    const targetOptions=[['lose','Lose'],['maintain','Maintain'],['gain','Gain']].map(([id,label])=>{
+      const on=s.goal.target===id; const b=segBtn(on);
+      return {label,color:b.color,bg:b.bg,onClick:()=>this.setGoalField('target',id)};
+    });
+
+    // ----- lens screen titles -----
+    const titleMap={ history:['History', isPlate?'Every meal you have scanned':'Produce you have scanned'],
+      saved:['Saved','Your saved fruits and vegetables'], myplants:['My Plants','Every plant in your collection'],
+      collection:['Collection','Your saved rocks and minerals'], guide:['Guide', (m.content&&m.content.cardsTitle)||''] };
+    const guideSubMap={fresh:'Storage, ripeness and how to use produce.',plant:'Watering, light and plant safety.',rock:'Field tests and identification basics.'};
+    const st = titleMap[tab]||['',''];
+
+    const C=m.content||{};
+
+    // ----- macro colors + refine chat (plate follow-up) -----
+    const macroColor={Calories:m.accent,Carbs:'#FF9F0A',Protein:'#FF375F',Fat:'#0A84FF'};
+    const chatCfg=(isPlate && m.result.chat)||[];
+    const cst=s.chat||{step:0,answers:[],typing:false};
+    const chatMsgs=[];
+    const pushMsg=(role,text)=>chatMsgs.push({role,text,side:role==='ai'?'flex-start':'flex-end',bg:role==='ai'?'var(--surface)':m.buttonGradient,color:role==='ai'?'rgb(var(--ink))':'#fff',brad:role==='ai'?'15px 15px 15px 4px':'15px 15px 4px 15px'});
+    for(let i=0;i<cst.step && i<chatCfg.length;i++){ pushMsg('ai',chatCfg[i].ai); pushMsg('user',cst.answers[i]); }
+    let chatOptions=[];
+    if(!cst.typing){
+      if(cst.step<chatCfg.length){ pushMsg('ai',chatCfg[cst.step].ai); chatOptions=chatCfg[cst.step].options.map(o=>({label:o,onClick:()=>this.answerChat(o)})); }
+      else if(chatCfg.length){ pushMsg('ai','Perfect — I’ve updated your estimate. Your numbers look solid ✨'); }
+    }
+    // read-only refine summary (history detail): completed Q&A pairs
+    const chatSummary=chatCfg.map((c,i)=>({q:c.ai, a:(cst.answers[i]!=null?cst.answers[i]:(c.options&&c.options[0])||'—')}));
+
+    return {
+      // theme
+      accent:m.accent, glow:m.glow, buttonGradient:m.buttonGradient, glassTint:m.glassTint, softTint:m.softTint, bgStyle:T.bg,
+      ink:T.ink, surface:T.surface, panel:T.panel, glass1:T.glass1, glass2:T.glass2, tint:T.tint, soft:T.soft,
+      dark, notDark:!dark, showSettings:s.showSettings, openSettings:this.openSettings, closeSettings:this.closeSettings, toggleDark:this.toggleDark,
+      usageRows, tokUsed:String(tokUsed), tokTotal:String(tokTotal), tokLeft:`${tokTotal-tokUsed} scans left today`, tokPct:`${Math.round(tokUsed/tokTotal*100)}%`,
+      darkModeSub: dark?'On · easier on the eyes':'Off · bright theme', darkTrackBg: dark?'var(--btn)':'rgba(var(--ink),.18)', darkKnobJustify: dark?'flex-end':'flex-start',
+      // shell / routing
+      isWelcome:s.welcome, showNav:!s.welcome, scrollKey:`${m.id}-${tab}`,
+      isHomeTab:homeTab, isScan, isResult,
+      isPlateToday, isPlateCalendar, isPlateHistory, isPlateGoal,
+      isLensHome, isLensList, isLensCollection, isLensGuide, isLensReminders, isLensCompare,
+      scanning:s.scanning, notScanning:!s.scanning,
+      // header/hero
+      modeName:m.name, tagline:m.tagline, description:m.description,
+      ctaText:m.cta, subjectWord:m.subjectWord, scanInstruction:m.scanInstruction, disclaimer:m.disclaimer,
+      heroIcon:this.iconEl(m.icon), wheel:this.buildWheel(), bottomNav:this.buildNav(),
+      wheelModes:this.modes.map(x=>({icon:this.iconEl(x.icon),accent:x.accent})),
+      dots:this.modes.map((x,i)=>({onClick:()=>this.select(i),bg:i===s.active?x.accent:'rgba(var(--ink),.2)',w:i===s.active?'22px':'7px'})),
+      // plate today
+      calorieRing:this.buildRing(), calConsumed:s.consumed.cal, calGoal:s.goal.daily,
+      macroLegend:[{label:'Carbs',value:s.consumed.carbs,color:'#FF9F0A'},{label:'Protein',value:s.consumed.protein,color:'#FF375F'},{label:'Fat',value:s.consumed.fat,color:'#0A84FF'}],
+      plateRecent:(m.history||[]).slice(0,1),
+      // plate calendar
+      calMonthLabel:`${monthNames[s.calMonth]} ${s.calYear}`,
+      calWeekdays:['S','M','T','W','T','F','S'].map((d,i)=>({d})),
+      calDays,
+      calSelLabel: `${monthNames[s.calMonth]} ${s.calSelected}`,
+      calSelCal:String(selTot.cal), calSelPct, calSelMeals:`${selMeals.length} ${selMeals.length===1?'meal':'meals'}`,
+      calSelList: selMeals.map(x=>({name:x.name,time:x.time,cal:String(x.cal),macros:`${x.carbs}C · ${x.protein}P · ${x.fat}F`})),
+      calSelMacros, calSelEmpty: selMeals.length===0, calSelNotEmpty: selMeals.length>0,
+      // plate history
+      query:s.query, onSearch:(e)=>this.setState({query:e.target.value}), plateHistoryList,
+      // goal
+      goalAge:s.goal.age, goalHeight:s.goal.height, goalWeight:s.goal.weight, goalActivity:String(s.goal.activity),
+      maleColor:mSex.color, maleBg:mSex.bg, femaleColor:fSex.color, femaleBg:fSex.bg,
+      setSexMale:()=>this.setGoalField('sex','male'), setSexFemale:()=>this.setGoalField('sex','female'),
+      onAge:(e)=>this.setGoalField('age',+e.target.value||0),
+      onHeight:(e)=>this.setGoalField('height',+e.target.value||0),
+      onWeight:(e)=>this.setGoalField('weight',+e.target.value||0),
+      onActivity:(e)=>this.setGoalField('activity',e.target.value),
+      targetOptions, goalEstimate:this.estimateGoal(s.goal).toLocaleString(), saveGoal:this.saveGoal,
+      // result
+      resultTitle:m.result.title, resultSubtitle:m.result.subtitle, confidenceText:`${confLabel} · ${conf}%`,
+      confLabel, confPct:`${conf}%`, confColor:conf>=85?'#22A45D':conf>=70?'#FF9F0A':'#FF375F',
+      resultCaution:m.result.caution, resultFields:(m.result.fields||[]).map(f=>({label:f.label,value:f.value,color:macroColor[f.label]||m.accent})),
+      resultDescription:m.result.description||'', hasDescription:!!m.result.description,
+      resultAka: m.result.aka?('Also known as '+m.result.aka):(m.result.sci?('Scientific name · '+m.result.sci):''), hasAka:!!(m.result.aka||m.result.sci),
+      resultImgLabel:`${m.subjectWord} photo`,
+      scanBadges:(m.result.fields||[]).slice(0,3).map((f,i)=>{const c=macroColor[f.label]||m.accent;return {
+        value:f.value, label:f.label, color:c, tint:this.hexA(c,0.22),
+        pos:['top:15%;left:50%;transform:translateX(-50%)','top:46%;left:11%','bottom:19%;right:11%'][i],
+        size:i===0?'92px':'70px', fs:i===0?'17px':'14px', delay:`${0.5+i*0.55}s`
+      };}),
+      resultLists:(m.result.lists||[]).map(l=>({title:l.title,items:(l.items||[]).map(t=>({t}))})),
+      portionQs:(m.result.portionQs||[]).map(q=>({q})), hasPortionQs:isPlate&&!s.fromHistory&&!!(m.result.portionQs&&m.result.portionQs.length),
+      fromHistory:s.fromHistory, notFromHistory:!s.fromHistory,
+      chatSummary, hasChatSummary:isPlate&&s.fromHistory&&chatSummary.length>0,
+      chatMsgs, chatOptions, chatHasOptions:chatOptions.length>0, chatTyping:!!cst.typing,
+      usageText:`${left} of ${lim} scans left today`, usageResets:'Resets tomorrow',
+      usageBarPct:`${Math.round(left/lim*100)}%`, usageEmpty:left<=0, usageNotEmpty:left>0,
+      // lens home
+      lensHeroTitle:C.heroTitle, lensHeroSub:C.heroSub, lensCardsTitle:C.cardsTitle||'Featured',
+      lensCards:C.cards||[], lensRecent:m.history||[],
+      hasCareTip:m.id==='plant' && tab==='care', careTip:C.careTip||'',
+      // lens collection
+      screenTitle:st[0], screenSub: tab==='guide' ? (guideSubMap[m.id]||'') : st[1],
+      hasCollectionGrid: m.id==='fresh' && tab==='saved',
+      collectionGrid: (m.id==='fresh'?C.grid:[])||[],
+      collectionItems: C.items||[],
+      // reminders / compare / guide
+      reminderCards:C.reminders||[], compareRows:C.compare||[], guideCards:C.guide||[],
+      // handlers
+      dismissWelcome:this.dismissWelcome, goScan:()=>this.goTab('scan'),
+      goHistory:()=>this.goTab('history'), goResult:()=>this.setState({tab:'result',scanning:false,fromHistory:true}), startScan:this.startScan, saveResult:this.saveResult
+    };
+  }
+}
+</script>
+</body>
+</html>
